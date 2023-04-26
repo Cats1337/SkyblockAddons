@@ -155,9 +155,6 @@ public class IslandWarpGui extends GuiScreen {
         int endColor = new Color(0,0, 0, Math.round(255/2F)).getRGB();
         drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), startColor, endColor);
 
-        drawCenteredString(mc.fontRendererObj, Translations.getMessage("warpMenu.click"), sr.getScaledWidth()/2, 10, 0xFFFFFFFF);
-        drawCenteredString(mc.fontRendererObj, Translations.getMessage("warpMenu.mustUnlock"), sr.getScaledWidth()/2, 20, 0xFFFFFFFF);
-
         GlStateManager.pushMatrix();
         ISLAND_SCALE = 0.7F/1080*mc.displayHeight;
         float scale = ISLAND_SCALE;
@@ -234,13 +231,13 @@ public class IslandWarpGui extends GuiScreen {
                     }
                 }, 20);
             }
-            if (selectedMarker != null) {
+            if (selectedMarker != null && selectedMarker.warpName == "jerry") {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/savethejerrys");
+            }
+            else if (selectedMarker != null) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp " + selectedMarker.getWarpName());
-            } /*else {
-                // Weirdly, this command is /warpforge instead of /warp forge
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp" + selectedMarker.getWarpName());
-            }*/
-
+            }
+            //forge?
         }
 
         int minecraftScale = new ScaledResolution(mc).getScaleFactor();
@@ -308,7 +305,8 @@ public class IslandWarpGui extends GuiScreen {
         HUB("Hub", 300, 724),
         PRIVATE_ISLAND("Private Island", 275, 1122),
         GARDEN("Garden", 50, 1000),
-        DUNGEON_HUB("Dungeon Hub", 1500, 1050);
+        DUNGEON_HUB("Dungeon Hub", 1500, 1050),
+        WINTER_ISLAND("Winter Island", 1600, 850);
 
         private final String label;
         private final int x;
@@ -375,12 +373,13 @@ public class IslandWarpGui extends GuiScreen {
         DRAGONS_NEST("drag", "Dragon's Nest", Island.THE_END, 260, 248),
         VOID_SEPULTURE("void", "Void Sepulture", Island.THE_END, true, 370, 227),
 
-        CRIMSON_ISLE("nether", Translations.getMessage("warpMenu.spawn"), Island.CRIMSON_ISLE, true, 80, 350),
-        FORGOTTEN_SKULL("kuudra", "Forgotten Skull", Island.CRIMSON_ISLE, true, 275, 150),
-        THE_WASTELAND("wasteland", "The Wasteland", Island.CRIMSON_ISLE, true, 275, 180),
-        DRAGONTAIL("dragontail", "Dragontail", Island.CRIMSON_ISLE, true, 60, 200),
-        SCARLETON("scarleton", "Scarleton", Island.CRIMSON_ISLE, true, 400, 180),
-        SMOLDERING_TOMB("smold", "Smoldering Tomb", Island.CRIMSON_ISLE, true, 275, 250),
+        CRIMSON_ISLE("nether", Translations.getMessage("warpMenu.spawn"), Island.CRIMSON_ISLE, true, 80, 375),
+        FORGOTTEN_SKULL("kuudra", "Forgotten Skull", Island.CRIMSON_ISLE, true, 460, 130),
+        THE_WASTELAND("wasteland", "The Wasteland", Island.CRIMSON_ISLE, true, 400, 150),
+        SMOLDERING_TOMB("smold", "Smoldering Tomb", Island.CRIMSON_ISLE, true, 450, 180),
+        DRAGONTAIL("dragontail", "Dragontail", Island.CRIMSON_ISLE, true, 100, 150),
+        SCARLETON("scarleton", "Scarleton", Island.CRIMSON_ISLE, true, 425, 275),
+
 
         THE_BARN("barn", Translations.getMessage("warpMenu.spawn"), Island.THE_BARN, true, 140, 150),
         MUSHROOM_DESERT("desert", Translations.getMessage("warpMenu.spawn"), Island.MUSHROOM_DESERT, true, 210, 295),
@@ -388,14 +387,16 @@ public class IslandWarpGui extends GuiScreen {
 
         GOLD_MINE("gold", Translations.getMessage("warpMenu.spawn"), Island.GOLD_MINE, true, 86, 259),
 
+        WINTER_ISLAND("jerry", Translations.getMessage("warpMenu.spawn"), Island.WINTER_ISLAND, true, 150, 135),
+
         DEEP_CAVERNS("deep", Translations.getMessage("warpMenu.spawn"), Island.DEEP_CAVERNS, true, 97, 213),
         DWARVEN_MINES("mines", "Dwarven Mines", Island.DEEP_CAVERNS, false, 280, 205),
         DWARVEN_FORGE("forge", "Forge", Island.DEEP_CAVERNS, true, 260, 280),
         CRYSTAL_HOLLOWS("crystals", "Crystal Hollows", Island.DEEP_CAVERNS, true, 220, 350),
         CRYSTAL_NUCLEUS("nucleus", "Crystal Nucleus", Island.DEEP_CAVERNS, true, 170, 380),
-
         DUNGEON_HUB_ISLAND("dungeon_hub", Translations.getMessage("warpMenu.spawn"), Island.DUNGEON_HUB, false, 35, 80),
         ;
+
 
         private final String warpName;
         private final String label;
